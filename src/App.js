@@ -8,6 +8,7 @@ function App() {
   const [contacts, setContacts] = useState([]);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const [filter, setFilter] = useState('');
 
   const handleChange = (e) => {
     switch (e.target.name) {
@@ -62,15 +63,27 @@ function App() {
           Add contact
         </Button>
       </form>
+
       {contacts && (
-        <ul>
-          {contacts.map(({id, name, number}) => (
-            <li key={id}>
-              <span>{name}</span>
-              <span>{number}</span>
-            </li>
-          ))}
-        </ul>
+        <>
+          <TextField
+            autoComplete='off'
+            name="name"
+            id="outlined-basic"
+            label="Filter"
+            variant="outlined"
+            size="small"
+            sx={{ marginTop: '20px' }}
+          />
+          <ul>
+            {contacts.map(({ id, name, number }) => (
+              <li key={id}>
+                <span>{name}</span>
+                <span>{number}</span>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   );
