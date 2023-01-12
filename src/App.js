@@ -1,89 +1,47 @@
-import { nanoid } from 'nanoid';
 import { useState } from 'react';
-import {TextField, Button} from '@mui/material';
 import './App.css';
+import Form from './components/Form';
+import ContactList from './components/ContactList';
+import Filter from './components/Filter';
+import initialContacts from './initialContacts.json';
 
 
 function App() {
-  const [contacts, setContacts] = useState([]);
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [contacts, setContacts] = useState(initialContacts);
   const [filter, setFilter] = useState('');
 
-  const handleChange = (e) => {
-    switch (e.target.name) {
-      case 'name':
-        setName(e.target.value);
-        break;
-      case 'number':
-        setNumber(e.target.value);
-        break;
-      default:
-        break;
-    }
+  const addContact = (contact) => {
+    setContacts(prevState => [...prevState, contact]);
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const contact = {
-      id: nanoid(),
-      name,
-      number
-    }
-    setContacts(prevState => [...prevState, contact]);
-    setName('');
-    setNumber('');
+  const changeFilter = e => {
+    setFilter(e.target.value);
   }
+
+  const deleteContact = id => {
+    setContacts(prevState => {
+      return prevState.filter(contact => contact.id !== id)
+    })
+  };
+
+  const getVisibleContacts = () => {
+    const nomalizedFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(nomalizedFilter),
+    );
+  };
+
+  const visibleContacts = getVisibleContacts(); 
 
   return (
     <div className="App">
-      <form onSubmit={handleSubmit} autoComplete="off">
-        <TextField
-          name="name"
-          id="outlined-basic"
-          label="Name"
-          variant="outlined"
-          size="small"
-          sx={{ marginBottom: '20px' }}
-          value={name}
-          onChange={handleChange}
+      <Form addContact={addContact} />
+      <Filter onChange={changeFilter} value={filter} />
+      {visibleContacts && (
+        <ContactList
+          deleteContact={deleteContact}
+          contacts={visibleContacts}
         />
-        <br />
-        <TextField
-          name="number"
-          id="outlined-basic"
-          label="Number"
-          variant="outlined"
-          size="small"
-          value={number}
-          onChange={handleChange}
-        />
-        <br />
-        <Button type="submit" sx={{ marginTop: '20px' }} variant="outlined">
-          Add contact
-        </Button>
-      </form>
-
-      {contacts && (
-        <>
-          <TextField
-            autoComplete='off'
-            name="name"
-            id="outlined-basic"
-            label="Filter"
-            variant="outlined"
-            size="small"
-            sx={{ marginTop: '20px' }}
-          />
-          <ul>
-            {contacts.map(({ id, name, number }) => (
-              <li key={id}>
-                <span>{name}</span>
-                <span>{number}</span>
-              </li>
-            ))}
-          </ul>
-        </>
       )}
     </div>
   );
