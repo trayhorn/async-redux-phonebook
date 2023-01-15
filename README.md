@@ -72,10 +72,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 What this app can
 
-1) Add contact
-2) Delete contact
+1) Add contact ✅
+2) Delete contact ✅
 3) Filter contacts
-
-
-State in APP: contacts, filter
-State in Form: name, number

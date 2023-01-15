@@ -3,26 +3,18 @@ import './App.css';
 import Form from './components/Form';
 import ContactList from './components/ContactList';
 import Filter from './components/Filter';
-import initialContacts from './initialContacts.json';
+import { useSelector } from 'react-redux';
 
 
 function App() {
-  const [contacts, setContacts] = useState(initialContacts);
   const [filter, setFilter] = useState('');
 
-  const addContact = (contact) => {
-    setContacts(prevState => [...prevState, contact]);
-  }
+  const contacts = useSelector(state => state.app);
 
   const changeFilter = e => {
     setFilter(e.target.value);
   }
 
-  const deleteContact = id => {
-    setContacts(prevState => {
-      return prevState.filter(contact => contact.id !== id)
-    })
-  };
 
   const getVisibleContacts = () => {
     const nomalizedFilter = filter.toLowerCase();
@@ -31,16 +23,17 @@ function App() {
     );
   };
 
-  const visibleContacts = getVisibleContacts(); 
+  const visibleContacts = getVisibleContacts();
+
 
   return (
     <div className="App">
       <h1>Phonebook</h1>
-      <Form addContact={addContact} />
+      <Form />
       <h2>Contacts</h2>
       <Filter onChange={changeFilter} value={filter} />
       {visibleContacts && (
-        <ContactList deleteContact={deleteContact} contacts={visibleContacts} />
+        <ContactList contacts={visibleContacts} />
       )}
     </div>
   );

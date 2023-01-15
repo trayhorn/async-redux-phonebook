@@ -1,9 +1,12 @@
 import './ContactList.css';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteContact } from '../redux/store';
+import { useDispatch } from 'react-redux';
 
-export default function ContactList({ contacts, deleteContact }) {
 
+export default function ContactList({ contacts }) {
+  const dispatch = useDispatch();
   return (
     <>
       <ul className="list">
@@ -12,7 +15,7 @@ export default function ContactList({ contacts, deleteContact }) {
             <span>{name}</span>
             <span>{number}</span>
             <IconButton
-              onClick={() => deleteContact(id)}
+              onClick={() => dispatch(deleteContact(id))}
               aria-label="delete"
             >
               <DeleteIcon />

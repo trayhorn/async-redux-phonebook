@@ -1,40 +1,24 @@
-import { useState } from "react";
 import { TextField, Button } from '@mui/material';
-import { nanoid } from 'nanoid';
+import { useDispatch } from "react-redux";
+import { createContact } from "../redux/store";
 import './Form.css';
 
 
-export default function Form({ addContact }) {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
 
-  const handleChange = e => {
-    switch (e.target.name) {
-      case 'name':
-        setName(e.target.value);
-        break;
-      case 'number':
-        setNumber(e.target.value);
-        break;
-      default:
-        break;
-    }
-  };
+export default function Form() {
+  const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-    addContact(contact);
-    setName('');
-    setNumber('');
-  };
+    const form = e.currentTarget;
+    const name = form.elements.name.value;
+    const number = form.elements.number.value;
+    dispatch(createContact([name, number]));
+    form.reset();
+  }
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="off">
+    <form autoComplete="off" onSubmit={handleSubmit}>
       <TextField
         fullWidth
         name="name"
@@ -43,8 +27,6 @@ export default function Form({ addContact }) {
         variant="outlined"
         size="small"
         sx={{ marginBottom: '20px' }}
-        value={name}
-        onChange={handleChange}
       />
       <br />
       <TextField
@@ -54,8 +36,6 @@ export default function Form({ addContact }) {
         label="Number"
         variant="outlined"
         size="small"
-        value={number}
-        onChange={handleChange}
       />
       <br />
       <Button
