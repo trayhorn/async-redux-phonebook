@@ -35,13 +35,12 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Phonebook</h1>
       <Form addContact={addContact} />
+      <h2>Contacts</h2>
       <Filter onChange={changeFilter} value={filter} />
       {visibleContacts && (
-        <ContactList
-          deleteContact={deleteContact}
-          contacts={visibleContacts}
-        />
+        <ContactList deleteContact={deleteContact} contacts={visibleContacts} />
       )}
     </div>
   );
