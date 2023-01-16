@@ -1,21 +1,29 @@
 import { TextField } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeFilter } from '../redux/filterSlice';
 
 
-export default function Filter({ onChange, value }) {
+export default function Filter() {
+  const filterQuery = useSelector(state => state.filter);
+  const dispatch = useDispatch();
+
+  const handleChange = e => {
+    dispatch(changeFilter(e.target.value));
+  }
 
   return (
     <div>
       <TextField
         fullWidth
         autoComplete="off"
-        name="name"
+        name="filter"
         id="outlined-basic"
         label="Filter"
         variant="outlined"
         size="small"
         sx={{ marginTop: '20px' }}
-        value={value}
-        onChange={onChange}
+        onChange={handleChange}
+        value={filterQuery}
       />
     </div>
   );

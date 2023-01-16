@@ -1,6 +1,6 @@
 import { TextField, Button } from '@mui/material';
 import { useDispatch } from "react-redux";
-import { createContact } from "../redux/store";
+import { createContact } from "../redux/contactsSlice";
 import './Form.css';
 
 
