@@ -1,6 +1,6 @@
 import { TextField, Button } from '@mui/material';
 import { useDispatch } from "react-redux";
-import { createContact } from "../redux/contactsSlice";
+import { createContact } from "../redux/AppSlice";
 import './Form.css';
 
 
@@ -14,6 +14,7 @@ export default function Form() {
     const name = form.elements.name.value;
     const number = form.elements.number.value;
     dispatch(createContact([name, number]));
+    console.log(name, number);
     form.reset();
   }
 

@@ -1,14 +1,14 @@
 import './ContactList.css';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteContact } from '../redux/contactsSlice';
+import { deleteContact } from '../redux/AppSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 
 export default function ContactList() {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter);
+  const contacts = useSelector(state => state.app.contacts);
+  const filter = useSelector(state => state.app.filter);
 
   const getVisibleContacts = () => {
     const nomalizedFilter = filter.toLowerCase();
