@@ -14,7 +14,6 @@ export default function Form() {
     const name = form.elements.name.value;
     const number = form.elements.number.value;
     dispatch(createContact([name, number]));
-    console.log(name, number);
     form.reset();
   }
 

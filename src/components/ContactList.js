@@ -10,6 +10,7 @@ export default function ContactList() {
   const contacts = useSelector(state => state.app.contacts);
   const filter = useSelector(state => state.app.filter);
 
+
   const getVisibleContacts = () => {
     const nomalizedFilter = filter.toLowerCase();
     return contacts.filter(contact =>
@@ -24,7 +25,7 @@ export default function ContactList() {
       <ul className="list">
         {visibleContacts.map(({ id, name, number }) => (
           <li className="contactItem" key={id}>
-            <span>{name}</span>
+            <span className='contactName'>{name}</span>
             <span>{number}</span>
             <IconButton
               onClick={() => dispatch(deleteContact(id))}
