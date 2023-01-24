@@ -8,16 +8,29 @@ import { useEffect } from 'react';
 
 export default function ContactList() {
   const contacts = useSelector(state => state.phonebook.contacts.items);
-  const dispatch = useDispatch();
+  const filterQuery = useSelector(state => state.phonebook.filter);
 
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(fetchAll());
   }, [dispatch])
 
+
+  const getVisibleContacts = () => {
+    const normalizedFilter = filterQuery.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter),
+    );
+  };
+
+  const visibleContacts = getVisibleContacts();
+
+
   return (
     <section>
       <ul className="list">
-        {contacts.map(({ id, name, phone }) => (
+        {visibleContacts.map(({ id, name, phone }) => (
           <li className="contactItem" key={id}>
             <span className="contactName">{name}</span>
             <span>{phone}</span>

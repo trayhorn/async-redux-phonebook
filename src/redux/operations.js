@@ -1,3 +1,4 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import {
   fetchingInProgress,
@@ -8,6 +9,7 @@ import {
 } from './AppSlice';
 
 axios.defaults.baseURL = 'https://63cfa01f109824043782d052.mockapi.io/';
+
 
 export const fetchAll = () => async dispatch => {
   try {

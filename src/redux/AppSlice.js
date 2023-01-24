@@ -30,7 +30,10 @@ export const AppSlice = createSlice({
       state.contacts.items = state.contacts.items.filter(
         item => item.id !== action.payload.id,
       );
-    }
+    },
+    onFilterChange(state, action) {
+      state.filter = action.payload;
+    },
   },
 });
 
@@ -39,5 +42,6 @@ export const {
   fetchingSuccess,
   fetchingError,
   addContactSuccess,
-  deleteContactSuccess
+  deleteContactSuccess,
+  onFilterChange,
 } = AppSlice.actions;

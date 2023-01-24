@@ -1,10 +1,14 @@
 import { TextField } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { onFilterChange } from '../redux/AppSlice';
 
 
 export default function Filter() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
+  const handleChange = e => {
+    dispatch(onFilterChange(e.target.value));
+  }
 
   return (
     <div>
@@ -17,8 +21,7 @@ export default function Filter() {
         variant="outlined"
         size="small"
         sx={{ marginTop: '20px' }}
-        // onChange={handleChange}
-        // value={filterQuery}
+        onChange={handleChange}
       />
     </div>
   );
