@@ -1,6 +1,7 @@
 import { TextField, Button } from '@mui/material';
+import { nanoid } from 'nanoid';
 import { useDispatch } from "react-redux";
-import { createContact } from "../redux/AppSlice";
+import { addContact } from '../redux/operations';
 import './Form.css';
 
 
@@ -10,11 +11,15 @@ export default function Form() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const form = e.currentTarget;
-    const name = form.elements.name.value;
-    const number = form.elements.number.value;
-    dispatch(createContact([name, number]));
-    form.reset();
+    const name = e.target.elements.name.value;
+    const phone = e.target.elements.number.value;
+    const contact = {
+      id: nanoid(),
+      name,
+      phone
+    }
+    dispatch(addContact(contact));
+    e.target.reset()
   }
 
   return (

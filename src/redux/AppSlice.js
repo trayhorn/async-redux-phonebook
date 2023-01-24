@@ -1,42 +1,43 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
-import initialContacts from '../initialContacts.json';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 
 export const AppSlice = createSlice({
-  name: 'app',
+  name: 'phonebook',
   initialState: {
-    contacts: initialContacts,
+    contacts: {
+      items: [],
+      isLoading: false,
+      error: null,
+    },
     filter: '',
   },
   reducers: {
-    createContact(state, action) {
-      const contact = {
-        id: nanoid(),
-        name: action.payload[0],
-        number: action.payload[1],
-      };
-
-      const isDuplicate = state.contacts.some(
-        prevContact =>
-          prevContact.name === contact.name ||
-          prevContact.number === contact.number,
+    fetchingInProgress(state) {
+      state.contacts.isLoading = true;
+    },
+    fetchingSuccess(state, action) {
+      state.contacts.isLoading = false;
+      state.contacts.items = action.payload;
+    },
+    fetchingError(state, action) {
+      state.contacts.isLoading = false;
+      state.contacts.error = action.payload;
+    },
+    addContactSuccess(state, action) {
+      state.contacts.items = [...state.contacts.items, action.payload];
+    },
+    deleteContactSuccess(state, action) {
+      state.contacts.items = state.contacts.items.filter(
+        item => item.id !== action.payload.id,
       );
-
-      if (isDuplicate) {
-        Notify.failure('The contact already exists');
-      } else {
-        state.contacts.push(contact);
-      }
-    },
-    deleteContact(state, action) {
-      state.contacts = state.contacts.filter(contact => contact.id !== action.payload);
-    },
-    changeFilter(state, action) {
-      (state.filter = action.payload);
     }
   },
 });
 
-export const { createContact, deleteContact, changeFilter } = AppSlice.actions;
+export const {
+  fetchingInProgress,
+  fetchingSuccess,
+  fetchingError,
+  addContactSuccess,
+  deleteContactSuccess
+} = AppSlice.actions;

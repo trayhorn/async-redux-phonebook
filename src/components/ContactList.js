@@ -1,41 +1,35 @@
 import './ContactList.css';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteContact } from '../redux/AppSlice';
+import { fetchAll, deleteContact } from '../redux/operations';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 
 export default function ContactList() {
+  const contacts = useSelector(state => state.phonebook.contacts.items);
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.app.contacts);
-  const filter = useSelector(state => state.app.filter);
 
-
-  const getVisibleContacts = () => {
-    const nomalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(nomalizedFilter),
-    );
-  };
-
-  const visibleContacts = getVisibleContacts();
+  useEffect(() => {
+    dispatch(fetchAll());
+  }, [dispatch])
 
   return (
-    <>
+    <section>
       <ul className="list">
-        {visibleContacts.map(({ id, name, number }) => (
+        {contacts.map(({ id, name, phone }) => (
           <li className="contactItem" key={id}>
-            <span className='contactName'>{name}</span>
-            <span>{number}</span>
+            <span className="contactName">{name}</span>
+            <span>{phone}</span>
             <IconButton
-              onClick={() => dispatch(deleteContact(id))}
               aria-label="delete"
+              onClick={() => dispatch(deleteContact(id))}
             >
               <DeleteIcon />
             </IconButton>
           </li>
         ))}
       </ul>
-    </>
+    </section>
   );
 }
