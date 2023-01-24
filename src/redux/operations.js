@@ -1,4 +1,3 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import {
   fetchingInProgress,
@@ -24,10 +23,9 @@ export const fetchAll = () => async dispatch => {
 export const addContact = (contact) => async dispatch => {
   try {
     const response = await axios.post('/contacts', contact);
-    console.log(response.data);
     dispatch(addContactSuccess(response.data));
   } catch (error) {
-    console.log(error);
+    dispatch(fetchingError(error));
   }
 }
 
@@ -35,9 +33,8 @@ export const deleteContact = (id) => async dispatch => {
   try {
     const response = await axios.delete(`/contacts/${id}`);
     dispatch(deleteContactSuccess(response.data));
-    console.log(response.data);
   } catch (error) {
-    console.log(error);
+    dispatch(fetchingError(error));
   }
 }
 

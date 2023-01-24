@@ -1,9 +1,9 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAll, deleteContact } from '../redux/operations';
 import './ContactList.css';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { fetchAll, deleteContact } from '../redux/operations';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 
 
 export default function ContactList() {
