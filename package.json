@@ -1,7 +1,8 @@
 {
-  "name": "react-redux-phonebook",
+  "name": "async-redux-phonebook",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://trayhorn.github.io/async-redux-phonebook/",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
