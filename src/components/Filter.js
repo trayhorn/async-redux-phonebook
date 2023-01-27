@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { onFilterChange } from '../redux/AppSlice';
+import { onFilterChange } from 'redux/PhonebookSlice';
 
 
 export default function Filter() {

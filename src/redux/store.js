@@ -1,11 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { AppSlice } from './AppSlice';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { phonebookApi, filterSlice } from './PhonebookSlice';
 
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
-    phonebook: AppSlice.reducer
+    filter: filterSlice.reducer,
+    [phonebookApi.reducerPath]: phonebookApi.reducer,
   },
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware(),
+    phonebookApi.middleware,
+  ],
 });
+
+setupListeners(store.dispatch);
 
 
