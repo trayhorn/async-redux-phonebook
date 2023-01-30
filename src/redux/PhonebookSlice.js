@@ -1,17 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const filterSlice = createSlice({
-  name: 'filter',
-  initialState: '',
-  reducers: {
-    onFilterChange(state, action) {
-      state.filter = action.payload;
-    },
-  },
-});
-
-export const { onFilterChange } = filterSlice.actions;
 
 export const phonebookApi = createApi({
   reducerPath: 'phonebookApi',

@@ -1,14 +1,9 @@
 import { TextField } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { onFilterChange } from 'redux/PhonebookSlice';
 
-
-export default function Filter() {
-  const dispatch = useDispatch();
-
+export default function Filter({ onFilterChange, value }) {
   const handleChange = e => {
-    dispatch(onFilterChange(e.target.value));
-  }
+    onFilterChange(e.target.value);
+  };
 
   return (
     <div>
@@ -22,6 +17,7 @@ export default function Filter() {
         size="small"
         sx={{ marginTop: '20px' }}
         onChange={handleChange}
+        value={value}
       />
     </div>
   );
